@@ -16,4 +16,12 @@ class SitemeshBugRenderTextSpec extends ContainerGebSpec {
         then: 'the page title is correct'
             title == 'Welcome to Grails'
     }
+
+    void 'should render text'() {
+        when: 'visiting a controller endpoint that uses render(text:"...")'
+            go '/renderText'
+
+        then: 'the response is as expected'
+            $('p').text() == 'Hello World'
+    }
 }
