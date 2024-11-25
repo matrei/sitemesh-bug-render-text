@@ -1,27 +1,31 @@
 package com.example
-import grails.plugin.geb.ContainerGebSpec
 import grails.testing.mixin.integration.Integration
+import spock.lang.Specification
 
-/**
- * See https://docs.grails.org/latest/guide/testing.html#functionalTesting and https://www.gebish.org/manual/current/
- * for more instructions on how to write functional tests with Grails and Geb.
- */
 @Integration
-class SitemeshBugRenderTextSpec extends ContainerGebSpec {
+class SitemeshBugRenderTextSpec extends Specification {
 
-    void 'should display the correct title on the home page'() {
-        when: 'visiting the home page'
-            go '/'
+    void 'should render text/html'() {
+        when: 'visiting a controller endpoint that uses render(text:"...")'
+            String text = new URL("http://localhost:$serverPort/renderText/withContentTypeTextHtml").text
 
-        then: 'the page title is correct'
-            title == 'Welcome to Grails'
+        then: 'the response is as expected'
+            text.contains('<p>Hello World</p>')
+    }
+
+    void 'should render text/plain'() {
+        when: 'visiting a controller endpoint that uses render(text:"...", contentType: "text/plain")'
+            String text = new URL("http://localhost:$serverPort/renderText/withContentTypeTextPlain").text
+
+        then: 'the response is as expected'
+            text == '<p>Hello World</p>'
     }
 
     void 'should render text'() {
-        when: 'visiting a controller endpoint that uses render(text:"...")'
-            go '/renderText'
+        when: 'visiting a controller endpoint that uses render(String)'
+            String text = new URL("http://localhost:$serverPort/renderText/withOnlyString").text
 
         then: 'the response is as expected'
-            $('p').text() == 'Hello World'
+            text == '<p>Hello World</p>'
     }
 }

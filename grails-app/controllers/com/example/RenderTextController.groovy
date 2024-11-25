@@ -2,7 +2,23 @@ package com.example
 
 class RenderTextController {
 
-    def index() {
-        render text: '<p>Hello World</p>', contentType: 'text/html'
+    def withContentTypeTextHtml() {
+        render(
+                text: '<p>Hello World</p>',
+                contentType: 'text/html'
+        )
+    }
+
+    def withContentTypeTextPlain() {
+        render(
+                text: '<p>Hello World</p>',
+                contentType: 'text/plain'
+        )
+    }
+
+    def withOnlyString() {
+        render(
+                '<p>Hello World</p>'
+        )
     }
 }
