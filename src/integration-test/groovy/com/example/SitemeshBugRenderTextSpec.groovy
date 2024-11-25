@@ -10,7 +10,7 @@ class SitemeshBugRenderTextSpec extends Specification {
             String text = new URL("http://localhost:$serverPort/renderText/withContentTypeTextHtml").text
 
         then: 'the response is as expected'
-            text.contains('<p>Hello World</p>')
+            text == '<p>Hello World</p>'
     }
 
     void 'should render text/plain'() {
